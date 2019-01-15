@@ -8,7 +8,7 @@ An Android & iOS App to for people that want to keep track of every second of th
 - Plugin Duration picker: https://pub.dartlang.org/packages/flutter_duration_picker
 
 # Journal
-- 2019.01.14 Mockdata, home Listview, data categories structure, persistent timer, duration picker added
+- 2019.01.14 Mockdata, home Listview, data categories structure, persistent timer, duration picker added [Showcase](https://www.youtube.com/watch?v=sJSjLE4a2ms&feature=youtu.be)
 
 # Project 
 Create a timer app that keeps track of your daily life. 
