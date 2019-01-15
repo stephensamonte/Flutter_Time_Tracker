@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 import './HomePage.dart' as HomePage;
 import './DataDetailItemPage.dart' as DataDetailItemPage;
 
 import './Utility/Variables.dart' as Variables;
+import './Utility/TimerService.dart' as TimerService;
 
-void main() => runApp(MyApp());
+//void main() => runApp(MyApp());
+
+void main() {
+  final timerService = TimerService.TimerService();
+  runApp(
+    TimerService.TimerServiceProvider( // provide timer service to all widgets of your app
+      service: timerService,
+      child: MyApp(),
+    ),
+  );
+}
+//-----------------------------------------
+
+
+
+
+// ----------------------------------------
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

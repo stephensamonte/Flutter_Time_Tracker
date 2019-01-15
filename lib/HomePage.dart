@@ -17,7 +17,6 @@ class _HomePageState extends State<HomePage> {
 
   String title;
 
-
   @override
   void initState() {
     title = "Time Tracker";
@@ -25,8 +24,6 @@ class _HomePageState extends State<HomePage> {
 
   void _incrementCounter() {
     setState(() {
-
-
       _counter++;
     });
   }
@@ -34,14 +31,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
+
     return Scaffold(
       appBar: AppBar(
-
         title: Text(title),
       ),
       body: new WorkoutListFragment.ListFragment(
         dayData: MockData.mockSingleDay,
       ),
+
 
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
