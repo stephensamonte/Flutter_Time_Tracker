@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +8,7 @@ import './DataAddItemPage.dart' as WorkoutAddItemPage;
 import './Utility/Documents.dart' as Documents;
 
 import './Utility/Variables.dart' as MyVariables;
+import './Utility/TimerText.dart' as TimerText;
 
 // Page
 class DataDetailItemPage extends StatefulWidget {
@@ -26,9 +29,17 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 
   Documents.UserDataItem dataItem;
 
+  // Stopwatch to get a time duration
+  Stopwatch stopwatch = new Stopwatch();
+
+  String stopwatchText;
+
   @override
   void initState() {
+
     dataItem = widget.dataItem;
+
+    stopwatchText = stopwatch.isRunning ? "stop" : "start";
   }
 
   @override
@@ -37,6 +48,7 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
         appBar: new AppBar(
           title: new Text(dataItem.category),
           actions: <Widget>[
+
             new PopupMenuButton<String>(
                 padding: EdgeInsets.zero,
                 onSelected: _showMenuSelection,
@@ -69,24 +81,30 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                new Container(height: 200.0,
+                    child: new Center(
+                      child: new TimerText.TimerText(stopwatch: stopwatch),
+                    )),
+                new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(dataItem.category),
+                    // Display userListItem from Firebase Database
+                    new Text(dataItem.duration.toString(),
+                        style: new TextStyle(
+                            color: (dataItem.duration != "") ?
+                            Colors.green :
+                            Colors.black
+                        )
+                    ),
+                    new Text(dataItem.timestampDay.toString()),
+                    new Text(dataItem.timestampModified.toString()),
+                  ],
+                ),
                 new RaisedButton(
-                    child: const Text('Just a button.'),
+                    child: Text(stopwatchText),
                     onPressed: () {
-                      // move all data
-
-                      // this is a document reference
-//                      final DocumentReference postRef = Firestore.instance.document('posts/123');
-//                      Firestore.instance.runTransaction((Transaction tx) async {
-//                        DocumentSnapshot postSnapshot = await tx.get(postRef);
-//                        if (postSnapshot.exists) {
-//                          await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
-//                        }
-//                      });
-
-//                      MyAuthentication.userLogout(context); // logout the user
-//                      Navigator.popUntil(context, ModalRoute.withName("/"));
-//                      Navigator.pop(context);
-//                      Navigator.of(context).pushNamed("/");
+                      stopwatchStartStop();
                     } // signs out the userm
                     ),
               ],
@@ -124,4 +142,16 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 //    showInSnackBar('You selected: $value');
   }
 
+  void stopwatchStartStop() {
+    setState(() {
+      if (stopwatch.isRunning) {
+        stopwatch.stop();
+      } else {
+        stopwatch.start();
+      }
+    });
+  }
+
 }
+
+

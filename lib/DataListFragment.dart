@@ -101,10 +101,6 @@ class _dataListListItem extends StatelessWidget {
 //                  Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("There is no url.")));
 //                }
 
-//          _sendMessageToFriend(
-//              context,
-//              chatDocument["name"],
-//              chatDocument[MyConstants.name2]);
               },
               child: new Container(
                 // could just return container
