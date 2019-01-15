@@ -30,10 +30,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: new WorkoutListFragment.ListFragment(
-        dayData: MockData.mockSingleDay,
-      ),
-
+      body: new WorkoutListFragment.ListFragment(),
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
