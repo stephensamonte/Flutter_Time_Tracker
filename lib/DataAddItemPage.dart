@@ -6,6 +6,7 @@ import './DataDetailItemPage.dart' as WorkOutDetailItemPage;
 import './Utility/Documents.dart' as Documents;
 
 import './Utility/Variables.dart' as MyVariables;
+import './MockData.dart' as MockData;
 
 /// Enum behavior for the bottom navigation bar.
 enum AppBarBehavior {normal, pinned, floating, snapping}
@@ -14,9 +15,9 @@ enum AppBarBehavior {normal, pinned, floating, snapping}
 class DataAddItemPage extends StatefulWidget {
 //  static const String routeName = '/contacts';
 // here is a state object now defined in MessengerDetailPage
-  DataAddItemPage({Key key, this.dataItem}) : super(key: key);
+  DataAddItemPage({Key key, this.currentDate}) : super(key: key);
 
-  final Documents.UserDataItem dataItem;
+  final currentDate;
 
   static const String routeName = '/DataAddItemPage';
 
@@ -26,16 +27,12 @@ class DataAddItemPage extends StatefulWidget {
 
 /// Detail page state.
 class DataAddItemPageState extends State<DataAddItemPage> {
-//  static final GlobalKey<ScaffoldState> _scaffoldKey =
-//  new GlobalKey<ScaffoldState>();
 
 // input
   final TextEditingController _textController1 = new TextEditingController();
   final TextEditingController _textController2 = new TextEditingController();
   final TextEditingController _textController3 = new TextEditingController();
   final TextEditingController _textController4 = new TextEditingController();
-  final TextEditingController _textController5 = new TextEditingController();
-  final TextEditingController _textController6 = new TextEditingController();
 
   String documentId;
 
@@ -44,12 +41,9 @@ class DataAddItemPageState extends State<DataAddItemPage> {
 
   @override
   void initState() {
-    if (widget.dataItem != null){
 
       // set initial values of text controllers
-      _textController1.text = widget.dataItem.category;
-
-    }
+//      _textController1.text = widget.dataItem.category;
   }
 
   @override
@@ -79,7 +73,7 @@ class DataAddItemPageState extends State<DataAddItemPage> {
             ],
             flexibleSpace: new FlexibleSpaceBar(
               title: new Text(
-                "Add Checklist Item",
+                "Add Category Item",
                 overflow: TextOverflow.ellipsis,
               ),
 
@@ -119,25 +113,25 @@ class DataAddItemPageState extends State<DataAddItemPage> {
                 icon: Icons.person,
                 children: <Widget>[
                   new _itemTextField(
-                    title: "name",
-                    hint: "Enter name.",
+                    title: "Category",
+                    hint: "Enter Category.",
                     textfieldController: _textController1,
                   ),
-                  new _itemTextField(
-                    title: "category",
-                    hint: "Enter category.",
-                    textfieldController: _textController2,
-                  ),
-                  new _itemTextField(
-                    title: "details",
-                    hint: "Enter details.",
-                    textfieldController: _textController3,
-                  ),
-                  new _itemTextField(
-                    title: "url",
-                    hint: "Enter url.",
-                    textfieldController: _textController4,
-                  ),
+//                  new _itemTextField(
+//                    title: "category",
+//                    hint: "Enter category.",
+//                    textfieldController: _textController2,
+//                  ),
+//                  new _itemTextField(
+//                    title: "details",
+//                    hint: "Enter details.",
+//                    textfieldController: _textController3,
+//                  ),
+//                  new _itemTextField(
+//                    title: "url",
+//                    hint: "Enter url.",
+//                    textfieldController: _textController4,
+//                  ),
                 ],
               ),
             ]),
@@ -148,17 +142,18 @@ class DataAddItemPageState extends State<DataAddItemPage> {
         tooltip: 'Save document', // used by assistive technologies
         child: new Icon(Icons.save),
         onPressed: () {
-          // todo save data to database
 
-//          // create document item
-//          Documents.UserDataItem item = new Utility.WorkoutItem(
-//              name: _textController1.text ?? "",
-//              details: _textController2.text?? "",
-//              url: _textController3.text?? "",
-//              videoUrl: _textController4.text?? "",
-////              minutes: int.parse(_TextController5.text) ?? "",
-////              seconds: int.parse(_TextController6.text) ?? "",
-//          );
+
+          // create item
+          Documents.UserDataItem newItem = new Documents.UserDataItem(
+            category: _textController1.text,
+            duration: new Duration(),
+            timestampDay: widget.currentDate,
+            timestampModified: new DateTime.now()
+          );
+
+          // todo save data to list
+          MockData.mockSingleDay.add(newItem);
 
 
           // Pop current view

@@ -9,6 +9,10 @@ import './Utility/Documents.dart' as Documents;
 import './Utility/Variables.dart' as MyVariables;
 import './Utility/TimerService.dart' as TimerService;
 
+import 'package:flutter_duration_picker/flutter_duration_picker.dart';
+
+import './MockData.dart' as MockData;
+
 // Page
 class DataDetailItemPage extends StatefulWidget {
   DataDetailItemPage({Key key, this.dataItem}) : super(key: key);
@@ -109,10 +113,51 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
                               child: Text(
                                   !timerService.isRunning ? 'Start' : 'Stop'),
                             ),
-//                            RaisedButton(
-//                              onPressed: timerService.reset,
-//                              child: Text('Reset'),
-//                            )
+                            RaisedButton(
+                              child: Text('Add Duration'),
+                              onPressed: () async {
+                                // Use it as a dialog, passing in an optional initial time
+                                // and returning a promise that resolves to the duration
+                                // chosen when the dialog is accepted. Null when cancelled.
+                                Duration resultingDuration = await showDurationPicker(
+                                  context: context,
+                                  initialTime: new Duration(minutes: 30),
+                                );
+
+                                // add selected duration
+                                addDurationData(resultingDuration);
+
+                                // display update
+                                setState(() {});
+
+                                // Notify user of change
+                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text("Chose duration: $resultingDuration")));
+                              },
+                            ),
+                            RaisedButton(
+                              child: Text('Set Duration'),
+                              onPressed: () async {
+                                // Use it as a dialog, passing in an optional initial time
+                                // and returning a promise that resolves to the duration
+                                // chosen when the dialog is accepted. Null when cancelled.
+                                Duration resultingDuration = await showDurationPicker(
+                                  context: context,
+                                  initialTime: new Duration(minutes: 30),
+                                );
+
+                                // set selected duration
+                                setDurationData(resultingDuration);
+
+                                // display update
+                                setState(() {});
+
+                                // Notify user of change
+                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text("Chose duration: $resultingDuration")));
+                              },
+
+                            )
                           ],
                         );
                       },
@@ -140,6 +185,8 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
       case "Delete":
         // delete the document in the database
 
+        MockData.mockSingleDay.remove(widget.dataItem);
+
         // Pop current view
         Navigator.of(context).pop();
 
@@ -161,11 +208,21 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 //    showInSnackBar('You selected: $value');
   }
 
+  void setDurationData(Duration setDuration){
+
+    if (setDuration != null){
+      // save new duration
+      dataItem.duration = setDuration;
+    }
+
+  }
   // Save data
   void addDurationData(Duration addDuration) {
 
-    // save new duration
-    dataItem.duration = dataItem.duration + addDuration;
+    if (addDuration != null){
+      // save new duration
+      dataItem.duration = dataItem.duration + addDuration;
+    }
   }
 
   /// Modified from: http://bizz84.github.io/2018/03/18/How-Fast-Is-Flutter.html

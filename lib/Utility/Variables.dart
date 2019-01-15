@@ -5,3 +5,6 @@ import './Documents.dart' as Documents;
 
 // for data item detail page parameter
 Documents.UserDataItem dataItemDetailDocument;
+
+// DataAddItemPage
+DateTime dataDateAddItem;

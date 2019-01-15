@@ -2,7 +2,7 @@ import './Utility/Documents.dart' as Documents;
 
 Documents.UserDataItem item1 = new Documents.UserDataItem(
     category: "Work",
-    duration: new Duration(hours: 1, minutes: 23),
+    duration: new Duration(),
     timestampDay: new DateTime.now(),
     timestampModified: new DateTime.now()
 );
@@ -10,7 +10,7 @@ Documents.UserDataItem item1 = new Documents.UserDataItem(
 
 Documents.UserDataItem item2 = new Documents.UserDataItem(
     category: "Sleep",
-    duration: new Duration(hours: 8),
+    duration: new Duration(),
     timestampDay: new DateTime.now(),
     timestampModified: new DateTime.now()
 );
