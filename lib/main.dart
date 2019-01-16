@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './HomePage.dart' as HomePage;
-import './DataDetailItemPage.dart' as DataDetailItemPage;
+import './DayItemDetailPage.dart' as DataDetailItemPage;
 import './AddCategoryPage.dart' as DataAddItemPage;
 
 import './Utility/Variables.dart' as Variables;
@@ -57,10 +57,10 @@ class MyApp extends StatelessWidget {
 //                settings: settings,
 //              );
 
-            case DataDetailItemPage.ItemDetailItemPage.routeName:
+            case DataDetailItemPage.DayItemDetailPage.routeName:
               return new MyCustomRoute(
                 builder: (_) =>
-                new DataDetailItemPage.ItemDetailItemPage(dataItem: Variables.dataItemDetailDocument,),
+                new DataDetailItemPage.DayItemDetailPage(dataItem: Variables.dataItemDetailDocument,),
                 settings: settings,
               );
 
@@ -118,7 +118,7 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
 //        );
 
 
-      case (DataDetailItemPage.ItemDetailItemPage.routeName):
+      case (DataDetailItemPage.DayItemDetailPage.routeName):
         return new FadeTransition(
 //          opacity: animation,
             opacity:

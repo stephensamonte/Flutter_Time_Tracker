@@ -13,8 +13,8 @@ import './MockData.dart' as MockData;
 import './Utility/SQLlocalStorage.dart' as LocalStorage;
 
 // Page
-class ItemDetailItemPage extends StatefulWidget {
-  ItemDetailItemPage({Key key, this.dataItem, this.DBHelper}) : super(key: key);
+class DayItemDetailPage extends StatefulWidget {
+  DayItemDetailPage({Key key, this.dataItem, this.DBHelper}) : super(key: key);
 
   static const routeName = "/DataDetailItemPage";
 
@@ -24,11 +24,11 @@ class ItemDetailItemPage extends StatefulWidget {
 
   // chat screen
   @override
-  State createState() => new ItemDetailPageState();
+  State createState() => new DayItemDetailPageState();
 }
 
 // Page State
-class ItemDetailPageState extends State<ItemDetailItemPage> {
+class DayItemDetailPageState extends State<DayItemDetailPage> {
   Documents.UserDataItem dataItem;
 
   @override

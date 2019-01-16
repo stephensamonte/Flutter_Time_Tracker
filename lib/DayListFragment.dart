@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
 import './Utility/Documents.dart' as Documents;
-import './DataDetailItemPage.dart' as DataDetailItemPage;
+import './DayItemDetailPage.dart' as DataDetailItemPage;
 
 import './Utility/Variables.dart' as Variables;
 import './Utility/SQLlocalStorage.dart' as LocalStorage;
@@ -12,16 +12,16 @@ import './Utility/SharedPrefsStorage.dart' as SharedPrefsStorage;
 import './MockData.dart' as MockData;
 
 /// Checklist List Fragment which displays a checklist collection
-class ListFragment extends StatefulWidget {
-  ListFragment({Key key}) : super(key: key);
+class DayListFragment extends StatefulWidget {
+  DayListFragment({Key key}) : super(key: key);
 
   // chat screen
   @override
-  State createState() => new ListFragmentScreenState();
+  State createState() => new DayListFragmentState();
 }
 
 /// State
-class ListFragmentScreenState extends State<ListFragment> {
+class DayListFragmentState extends State<DayListFragment> {
 
   // default categories
   List<String> defaultCategories;
@@ -166,7 +166,7 @@ class _DataListListItem extends StatelessWidget {
 
               // navigate to checklistAddItemDetailPage
               Navigator.of(context)
-                  .pushNamed(DataDetailItemPage.ItemDetailItemPage.routeName);
+                  .pushNamed(DataDetailItemPage.DayItemDetailPage.routeName);
 
 //                if(document[MyConstants.url2] != ""){
 //                  // launch url in browser

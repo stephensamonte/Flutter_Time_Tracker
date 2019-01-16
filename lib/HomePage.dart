@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './DataListFragment.dart' as WorkoutListFragment;
+import './DayListFragment.dart' as WorkoutListFragment;
 import './AddCategoryPage.dart' as DataAddItemPage;
 import './Utility/Variables.dart' as Variables;
 import './Utility/SQLlocalStorage.dart' as LocalStorage;
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
 
         ],
       ),
-      body: new WorkoutListFragment.ListFragment(),
+      body: new WorkoutListFragment.DayListFragment(),
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){

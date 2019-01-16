@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import './DataDetailItemPage.dart' as WorkOutDetailItemPage;
+import './DayItemDetailPage.dart' as WorkOutDetailItemPage;
 
 import './Utility/Documents.dart' as Documents;
 
