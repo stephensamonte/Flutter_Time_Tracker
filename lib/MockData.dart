@@ -3,16 +3,16 @@ import './Utility/Documents.dart' as Documents;
 Documents.UserDataItem item1 = new Documents.UserDataItem(
     category: "Work",
     duration: new Duration(),
-    timestampDay: new DateTime.now(),
-    timestampModified: new DateTime.now()
+    dayKey: new DateTime.now().toString(),
+    timeModified: new DateTime.now()
 );
 
 
 Documents.UserDataItem item2 = new Documents.UserDataItem(
     category: "Sleep",
     duration: new Duration(),
-    timestampDay: new DateTime.now(),
-    timestampModified: new DateTime.now()
+    dayKey: new DateTime.now().toString(),
+    timeModified: new DateTime.now()
 );
 
 // Mock data that represents a single day.

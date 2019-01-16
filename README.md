@@ -11,6 +11,7 @@ An Android & iOS App to for people that want to keep track of every second of th
 
 # Journal
 - 2019.01.14 (4 hours: 5pm -9pm) Mockdata, home Listview, data categories structure, persistent timer, duration picker added [Showcase](https://www.youtube.com/watch?v=sJSjLE4a2ms&feature=youtu.be)
+- 2019.01.15 (hours 2pm - 8) date picker, local storage
 
 # Project 
 Create a timer app that keeps track of your daily life. 

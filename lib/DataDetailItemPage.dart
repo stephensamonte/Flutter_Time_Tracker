@@ -169,8 +169,8 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
                             color: (dataItem.duration != "")
                                 ? Colors.green
                                 : Colors.black)),
-                    new Text(dataItem.timestampDay.toString()),
-                    new Text(dataItem.timestampModified.toString()),
+                    new Text(dataItem.dayKey.toString()),
+                    new Text(dataItem.timeModified.toString()),
                   ],
                 ),
               ],

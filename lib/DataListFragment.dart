@@ -1,19 +1,11 @@
-// This is for dart async used to run google sign in in the background
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar/flutter_calendar.dart';
 import './Utility/Documents.dart' as Documents;
 import './DataDetailItemPage.dart' as DataDetailItemPage;
-import 'package:flutter_calendar/flutter_calendar.dart';
+
 
 import './Utility/Variables.dart' as Variables;
-
 import './Utility/LocalStorage.dart' as LocalStorage;
-
-
-
-// My own created imports
-//import './Data/MyAuthentication.dart' as MyAuthentication;
 
 /// Checklist List Fragment which displays a checklist collection
 class ListFragment extends StatefulWidget {
@@ -45,9 +37,21 @@ class ListFragmentScreenState extends State<ListFragment> {
     // determine key to retrieve data
     dayKey = LocalStorage.getDayKey(selectedDate);
 
+    dayData = new List();
     // get day data
-    dayData = LocalStorage.getDayData(dayKey);
+    getDayData();
   }
+
+  getDayData() async {
+    // get day data
+    dayData = await LocalStorage.getDayData(dayKey);
+
+    // update view with data
+    setState(() {
+
+    });
+  }
+
 
   @override
   void dispose() {
@@ -169,8 +173,8 @@ class _dataListListItem extends StatelessWidget {
                                   color: (item.duration != "")
                                       ? Colors.green
                                       : Colors.black)),
-                          new Text(item.timestampDay.toString()),
-                          new Text(item.timestampModified.toString()),
+                          new Text(item.dayKey.toString()),
+                          new Text(item.timeModified.toString()),
                         ],
                       ),
                     ),

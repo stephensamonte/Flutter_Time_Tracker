@@ -148,8 +148,8 @@ class DataAddItemPageState extends State<DataAddItemPage> {
           Documents.UserDataItem newItem = new Documents.UserDataItem(
             category: _textController1.text,
             duration: new Duration(),
-            timestampDay: widget.currentDate,
-            timestampModified: new DateTime.now()
+            dayKey: widget.currentDate,
+            timeModified: new DateTime.now()
           );
 
           // todo save data to list
