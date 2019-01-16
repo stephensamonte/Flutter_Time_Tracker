@@ -20,5 +20,5 @@ An Android & iOS App to for people that want to keep track of every second of th
 - 2019.01.16 (3.5 hours 2:30 am - 5 am) Shared Preferences, user defined categories, delete itemData, dayItems pie chart [Showcase](https://youtu.be/B8ij89_rLuE)
 
 # Project 
-Create a timer app that keeps track of your daily life.
+Project from Richard Tan: Create a timer app that keeps track of your daily life. Some people tracks their productivity into categories via a spreadsheet: Work, product, business, sleep, socializing, hygiene, housekeeping, enrichment, exercise. The app would be a timer that he could press start and stop to time how much time he spent on an activity. He didn’t believe that I can make the app in a day so I challenged myself to. 
 
