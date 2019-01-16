@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './DayListFragment.dart' as DayListFragment;
+import './DayChartsFragment.dart' as DayChartsFragment;
 import './AddCategoryPage.dart' as AddCategoryPage;
 import './Utility/Variables.dart' as Variables;
 import './Utility/SQLlocalStorage.dart' as SQLlocalStorage;
@@ -9,7 +9,7 @@ import './CategoriesPage.dart' as CategoriesPage;
 class DayChartsPage extends StatefulWidget {
   DayChartsPage({Key key}) : super(key: key);
 
-  static const String routeName = "/HomePage";
+  static const String routeName = "/DayChartsPage";
 
   @override
   _DayChartsPageState createState() => _DayChartsPageState();
@@ -20,6 +20,7 @@ class _DayChartsPageState extends State<DayChartsPage> {
 
   @override
   void initState() {
+    super.initState();
     title = "Day Charts";
   }
 
@@ -65,7 +66,7 @@ class _DayChartsPageState extends State<DayChartsPage> {
 
         ],
       ),
-      body: new DayListFragment.DayListFragment(),
+      body: new DayChartsFragment.DayChartsFragment(),
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){

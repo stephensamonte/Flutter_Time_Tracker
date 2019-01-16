@@ -5,6 +5,7 @@ import './Utility/Variables.dart' as Variables;
 import './Utility/SQLlocalStorage.dart' as SQLlocalStorage;
 
 import './CategoriesPage.dart' as CategoriesPage;
+import './DayChartsPage.dart' as DayChartsPage;
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -44,7 +45,13 @@ class _HomePageState extends State<HomePage> {
                     value: 'CategoriesPage',
                     child: const ListTile(
                         leading: const Icon(Icons.list),
-                        title: const Text('Categories')))
+                        title: const Text('Categories'))),
+                const PopupMenuItem<String>(
+                    value: 'DayChartsPage',
+                    child: const ListTile(
+                        leading: const Icon(Icons.list),
+                        title: const Text('Charts')))
+
                 //              new IconButton(
 //                icon: new Icon(Icons.calendar_today),
 //                tooltip: 'Calendar',
@@ -103,6 +110,12 @@ class _HomePageState extends State<HomePage> {
         // navigate to categories page
         Navigator.of(context).pushNamed(CategoriesPage.CategoriesPage.routeName);
         break;
+
+      case "DayChartsPage":
+      // navigate to categories page
+        Navigator.of(context).pushNamed(DayChartsPage.DayChartsPage.routeName);
+        break;
+
 
 
       case "Feedback":

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import './HomePage.dart' as HomePage;
 import './DayItemDetailPage.dart' as DayItemDetailPage;
 import './AddCategoryPage.dart' as AddCategoryPage;
+import './DayChartsPage.dart' as DayChartsPage;
 
 import './Utility/Variables.dart' as Variables;
 import './Utility/TimerService.dart' as TimerService;
+
 
 import './CategoriesPage.dart' as CategoriesPage;
 
@@ -76,6 +78,14 @@ class MyApp extends StatelessWidget {
                 new CategoriesPage.CategoriesPage(),
                 settings: settings,
               );
+            case DayChartsPage.DayChartsPage.routeName:
+              return new MyCustomRoute(
+                builder: (_) =>
+                new DayChartsPage.DayChartsPage(),
+                settings: settings,
+              );
+
+
           }
 
           assert(false);
@@ -155,6 +165,24 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
             ));
 
       case (CategoriesPage.CategoriesPage.routeName):
+        return new FadeTransition(
+//          opacity: animation,
+            opacity:
+//          animation,
+            new CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeIn,
+            ),
+            child: new SlideTransition(
+              position: new Tween<Offset>(
+                begin: const Offset(0.0, 0.2),
+                end: Offset.zero,
+              ).animate(//animation),
+                  new CurvedAnimation(parent: animation, curve: Curves.easeIn)),
+              child: child,
+            ));
+
+      case (DayChartsPage.DayChartsPage.routeName):
         return new FadeTransition(
 //          opacity: animation,
             opacity:

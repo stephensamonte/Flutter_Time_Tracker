@@ -223,6 +223,9 @@ class _DataListListItem extends StatelessWidget {
                       ),
                     ),
                   ],
-                ))));
+                )
+            )
+        )
+    );
   }
 }
