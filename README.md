@@ -1,5 +1,5 @@
 # flutter_time_tracker
-An Android & iOS App to for people that want to keep track of every second of their life. 
+An Android & iOS App to for people that want to keep track of every second of their life. A timer app that keeps track of your daily life. Some people tracks their productivity into categories via a spreadsheet: Work, product, business, sleep, socializing, hygiene, housekeeping, enrichment, exercise. The app would be a timer that he could press start and stop to time how much time someone spent on an activity. He didn’t believe that I can make the app in a day so I challenged myself to. 
 
 # Notes: 
 - The data in the backend updates. But, the visuals don't currently update as expected. So, you have to click to a different screen to refresh. 
@@ -20,5 +20,4 @@ An Android & iOS App to for people that want to keep track of every second of th
 - 2019.01.16 (3.5 hours 2:30 am - 5 am) Shared Preferences, user defined categories, delete itemData, dayItems pie chart [Showcase](https://youtu.be/B8ij89_rLuE)
 
 # Project 
-Project from Richard Tan: Create a timer app that keeps track of your daily life. Some people tracks their productivity into categories via a spreadsheet: Work, product, business, sleep, socializing, hygiene, housekeeping, enrichment, exercise. The app would be a timer that he could press start and stop to time how much time he spent on an activity. He didn’t believe that I can make the app in a day so I challenged myself to. 
-
+Project from Richard Tan: Create a timer app that keeps track of your daily life. Some people tracks their productivity into categories via a spreadsheet: Work, product, business, sleep, socializing, hygiene, housekeeping, enrichment, exercise. The app would be a timer that he could press start and stop to time how much time someone spent on an activity. He didn’t believe that I can make the app in a day so I challenged myself to. 
