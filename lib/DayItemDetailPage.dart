@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +8,7 @@ import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
 import './MockData.dart' as MockData;
 
-import './Utility/SQLlocalStorage.dart' as LocalStorage;
+import './Utility/SQLlocalStorage.dart' as SQLlocalStorage;
 
 // Page
 class DayItemDetailPage extends StatefulWidget {
@@ -20,7 +18,7 @@ class DayItemDetailPage extends StatefulWidget {
 
   // data of the item that was selected
   final Documents.UserDataItem dataItem;
-  final LocalStorage.DatabaseHelper DBHelper;
+  final SQLlocalStorage.DatabaseHelper DBHelper;
 
   // chat screen
   @override
@@ -191,7 +189,7 @@ class DayItemDetailPageState extends State<DayItemDetailPage> {
 
         MockData.mockSingleDay.remove(widget.dataItem);
 
-        LocalStorage.deleteItemInDB(widget.dataItem);
+        SQLlocalStorage.deleteItemInDB(widget.dataItem);
 
         // Pop current view
         Navigator.of(context).pop();
@@ -238,7 +236,7 @@ class DayItemDetailPageState extends State<DayItemDetailPage> {
   // Save data to database
   void saveItemToDB() async {
 
-    int result = await LocalStorage.saveItemToDB(dataItem);
+    int result = await SQLlocalStorage.saveItemToDB(dataItem);
 
     print("result: " + result.toString());
   }

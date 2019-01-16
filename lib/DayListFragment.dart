@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
 import './Utility/Documents.dart' as Documents;
-import './DayItemDetailPage.dart' as DataDetailItemPage;
+import './DayItemDetailPage.dart' as DayItemDetailPage;
 
 import './Utility/Variables.dart' as Variables;
-import './Utility/SQLlocalStorage.dart' as LocalStorage;
+import './Utility/SQLlocalStorage.dart' as SQLlocalStorage;
 import './Utility/Utility.dart' as Utility;
 
 import './Utility/SharedPrefsStorage.dart' as SharedPrefsStorage;
-
-import './MockData.dart' as MockData;
 
 /// Checklist List Fragment which displays a checklist collection
 class DayListFragment extends StatefulWidget {
@@ -45,7 +43,7 @@ class DayListFragmentState extends State<DayListFragment> {
     print("Now " + selectedDate.toString());
 
     // determine key to retrieve data
-    dayKey = LocalStorage.getDayKey(selectedDate);
+    dayKey = SQLlocalStorage.getDayKey(selectedDate);
 
     dayData = new List();
 
@@ -59,7 +57,7 @@ class DayListFragmentState extends State<DayListFragment> {
     dayData.clear();
 
     // get day data
-    dayData = await LocalStorage.getDayData(dayKey);
+    dayData = await SQLlocalStorage.getDayData(dayKey);
 
     await addDefaultCategories();
 
@@ -119,7 +117,7 @@ class DayListFragmentState extends State<DayListFragment> {
               // Update selected date
               selectedDate = clickedDate;
 
-              dayKey = LocalStorage.getDayKey(selectedDate);
+              dayKey = SQLlocalStorage.getDayKey(selectedDate);
 
               // update data in view
               getDayData();
@@ -166,7 +164,7 @@ class _DataListListItem extends StatelessWidget {
 
               // navigate to checklistAddItemDetailPage
               Navigator.of(context)
-                  .pushNamed(DataDetailItemPage.DayItemDetailPage.routeName);
+                  .pushNamed(DayItemDetailPage.DayItemDetailPage.routeName);
 
 //                if(document[MyConstants.url2] != ""){
 //                  // launch url in browser

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './AddCategoryPage.dart' as DataAddItemPage;
+import './AddCategoryPage.dart' as AddCategoryPage;
 import './Utility/Variables.dart' as Variables;
-import './Utility/SQLlocalStorage.dart' as LocalStorage;
+import './Utility/SQLlocalStorage.dart' as SQLlocalStorage;
 
 import './Utility/SharedPrefsStorage.dart' as SharedPrefsStorage;
 
@@ -91,7 +91,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
           // Open add new category
           Navigator.of(context)
-              .pushNamed(DataAddItemPage.AddCategoryPage.routeName);
+              .pushNamed(AddCategoryPage.AddCategoryPage.routeName);
         },
         tooltip: 'Add Category',
         child: Icon(Icons.add),
@@ -104,7 +104,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     switch (value) {
       case "ResetDB":
         // reset the database
-        LocalStorage.resetDatabase();
+        SQLlocalStorage.resetDatabase();
         break;
 
       case "ResetCategories":

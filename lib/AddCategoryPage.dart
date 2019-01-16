@@ -1,13 +1,6 @@
 
 import 'package:flutter/material.dart';
 
-import './DayItemDetailPage.dart' as WorkOutDetailItemPage;
-
-import './Utility/Documents.dart' as Documents;
-
-import './Utility/Variables.dart' as MyVariables;
-import './MockData.dart' as MockData;
-
 import './Utility/SharedPrefsStorage.dart' as SharedPrefsStorage;
 
 /// Enum behavior for the bottom navigation bar.

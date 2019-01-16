@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './HomePage.dart' as HomePage;
-import './DayItemDetailPage.dart' as DataDetailItemPage;
-import './AddCategoryPage.dart' as DataAddItemPage;
+import './DayItemDetailPage.dart' as DayItemDetailPage;
+import './AddCategoryPage.dart' as AddCategoryPage;
 
 import './Utility/Variables.dart' as Variables;
 import './Utility/TimerService.dart' as TimerService;
@@ -57,17 +57,17 @@ class MyApp extends StatelessWidget {
 //                settings: settings,
 //              );
 
-            case DataDetailItemPage.DayItemDetailPage.routeName:
+            case DayItemDetailPage.DayItemDetailPage.routeName:
               return new MyCustomRoute(
                 builder: (_) =>
-                new DataDetailItemPage.DayItemDetailPage(dataItem: Variables.dataItemDetailDocument,),
+                new DayItemDetailPage.DayItemDetailPage(dataItem: Variables.dataItemDetailDocument,),
                 settings: settings,
               );
 
-            case DataAddItemPage.AddCategoryPage.routeName:
+            case AddCategoryPage.AddCategoryPage.routeName:
               return new MyCustomRoute(
                 builder: (_) =>
-                new DataAddItemPage.AddCategoryPage(currentDate: Variables.dataDateAddItem,),
+                new AddCategoryPage.AddCategoryPage(currentDate: Variables.dataDateAddItem,),
                 settings: settings,
               );
             case CategoriesPage.CategoriesPage.routeName:
@@ -118,7 +118,7 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
 //        );
 
 
-      case (DataDetailItemPage.DayItemDetailPage.routeName):
+      case (DayItemDetailPage.DayItemDetailPage.routeName):
         return new FadeTransition(
 //          opacity: animation,
             opacity:
@@ -136,7 +136,7 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
               child: child,
             ));
 
-      case (DataAddItemPage.AddCategoryPage.routeName):
+      case (AddCategoryPage.AddCategoryPage.routeName):
         return new FadeTransition(
 //          opacity: animation,
             opacity:

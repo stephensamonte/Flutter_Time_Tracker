@@ -6,27 +6,25 @@ import './Utility/SQLlocalStorage.dart' as SQLlocalStorage;
 
 import './CategoriesPage.dart' as CategoriesPage;
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+class DayChartsPage extends StatefulWidget {
+  DayChartsPage({Key key}) : super(key: key);
 
   static const String routeName = "/HomePage";
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _DayChartsPageState createState() => _DayChartsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DayChartsPageState extends State<DayChartsPage> {
   String title;
 
   @override
   void initState() {
-    title = "Time Tracker";
+    title = "Day Charts";
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -89,7 +87,7 @@ class _HomePageState extends State<HomePage> {
   showMenuSelection(String value) {
     switch (value) {
       case "ResetDB":
-        // reset the database
+      // reset the database
         SQLlocalStorage.resetDatabase();
 
         break;
@@ -100,7 +98,7 @@ class _HomePageState extends State<HomePage> {
         break;
 
       case "CategoriesPage":
-        // navigate to categories page
+      // navigate to categories page
         Navigator.of(context).pushNamed(CategoriesPage.CategoriesPage.routeName);
         break;
 
