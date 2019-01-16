@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import './DataListFragment.dart' as WorkoutListFragment;
 import './DataAddItemPage.dart' as DataAddItemPage;
 import './Utility/Variables.dart' as Variables;
-
-import './MockData.dart' as MockData;
+import './Utility/LocalStorage.dart' as LocalStorage;
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -29,6 +28,37 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        actions: <Widget>[
+          new PopupMenuButton<String>(
+              padding: EdgeInsets.zero,
+              onSelected: showMenuSelection,
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                    value: 'ResetDB',
+                    child: const ListTile(
+                        leading: const Icon(Icons.warning),
+                        title: const Text('Reset Database')))
+                //              new IconButton(
+//                icon: new Icon(Icons.calendar_today),
+//                tooltip: 'Calendar',
+//                onPressed: () {
+//                  Navigator.of(context).pushNamed(CalMainNavigationDrawer
+//                      .CalMainNavigationDrawer.routeName);
+//                }, //
+//              ),
+//                    const PopupMenuItem<String>(
+//                        value: 'Settings',
+//                        child: const ListTile(
+//                            leading: const Icon(Icons.settings),
+//                            title: const Text('Settings'))),
+//                const PopupMenuItem<String>(
+//                    value: 'Feedback',
+//                    child: const ListTile(
+//                        leading: const Icon(Icons.feedback),
+//                        title: const Text('Feedback')))
+              ]),
+
+        ],
       ),
       body: new WorkoutListFragment.ListFragment(),
 
@@ -46,5 +76,29 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  /// App bar action selection.
+  showMenuSelection(String value) {
+    switch (value) {
+      case "ResetDB":
+        // reset the database
+        LocalStorage.resetDatabase();
+
+        break;
+      case "Settings":
+
+
+//        Navigator.of(context).pushNamed("/SettingsPage");
+        break;
+      case "Feedback":
+
+      // open feedback url
+//        MyUtility.launchURL("https://goo.gl/forms/MLEthJSxgQGgiYQJ2");
+        break;
+      default:
+      // todo notify user that there was an error
+    }
+//    showInSnackBar('You selected: $value');
   }
 }

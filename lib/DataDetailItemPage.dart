@@ -3,39 +3,38 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import './DataAddItemPage.dart' as WorkoutAddItemPage;
 import './Utility/Documents.dart' as Documents;
-
-import './Utility/Variables.dart' as MyVariables;
 import './Utility/TimerService.dart' as TimerService;
 
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
 import './MockData.dart' as MockData;
 
+import './Utility/LocalStorage.dart' as LocalStorage;
+
 // Page
-class DataDetailItemPage extends StatefulWidget {
-  DataDetailItemPage({Key key, this.dataItem}) : super(key: key);
+class ItemDetailItemPage extends StatefulWidget {
+  ItemDetailItemPage({Key key, this.dataItem, this.DBHelper}) : super(key: key);
 
   static const routeName = "/DataDetailItemPage";
 
   // data of the item that was selected
   final Documents.UserDataItem dataItem;
+  final LocalStorage.DatabaseHelper DBHelper;
 
   // chat screen
   @override
-  State createState() => new WorkoutDetailPageScreenState();
+  State createState() => new ItemDetailPageState();
 }
 
 // Page State
-class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
+class ItemDetailPageState extends State<ItemDetailItemPage> {
   Documents.UserDataItem dataItem;
-
-  // Stopwatch to get a time duration
-  Stopwatch stopwatch = new Stopwatch();
 
   @override
   void initState() {
+    super.initState();
+
     dataItem = widget.dataItem;
   }
 
@@ -95,7 +94,6 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
                                     dataItem.duration),
                                 style: TextStyle(
                                     fontSize: 60.0, fontFamily: "Open Sans")),
-
                             RaisedButton(
                               onPressed: !timerService.isRunning
                                   ? timerService.start
@@ -109,6 +107,9 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 
                                       // reset the timer
                                       timerService.reset();
+
+                                      // save data to database
+                                      saveItemToDB();
                                     },
                               child: Text(
                                   !timerService.isRunning ? 'Start' : 'Stop'),
@@ -119,7 +120,8 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
                                 // Use it as a dialog, passing in an optional initial time
                                 // and returning a promise that resolves to the duration
                                 // chosen when the dialog is accepted. Null when cancelled.
-                                Duration resultingDuration = await showDurationPicker(
+                                Duration resultingDuration =
+                                    await showDurationPicker(
                                   context: context,
                                   initialTime: new Duration(minutes: 30),
                                 );
@@ -132,7 +134,11 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 
                                 // Notify user of change
                                 Scaffold.of(context).showSnackBar(new SnackBar(
-                                    content: new Text("Chose duration: $resultingDuration")));
+                                    content: new Text(
+                                        "Chose duration: $resultingDuration")));
+
+                                // save data to database
+                                saveItemToDB();
                               },
                             ),
                             RaisedButton(
@@ -141,7 +147,8 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
                                 // Use it as a dialog, passing in an optional initial time
                                 // and returning a promise that resolves to the duration
                                 // chosen when the dialog is accepted. Null when cancelled.
-                                Duration resultingDuration = await showDurationPicker(
+                                Duration resultingDuration =
+                                    await showDurationPicker(
                                   context: context,
                                   initialTime: new Duration(minutes: 30),
                                 );
@@ -154,9 +161,12 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 
                                 // Notify user of change
                                 Scaffold.of(context).showSnackBar(new SnackBar(
-                                    content: new Text("Chose duration: $resultingDuration")));
-                              },
+                                    content: new Text(
+                                        "Chose duration: $resultingDuration")));
 
+                                // save data to database
+                                saveItemToDB();
+                              },
                             )
                           ],
                         );
@@ -208,18 +218,16 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 //    showInSnackBar('You selected: $value');
   }
 
-  void setDurationData(Duration setDuration){
-
-    if (setDuration != null){
+  void setDurationData(Duration setDuration) {
+    if (setDuration != null) {
       // save new duration
       dataItem.duration = setDuration;
     }
-
   }
+
   // Save data
   void addDurationData(Duration addDuration) {
-
-    if (addDuration != null){
+    if (addDuration != null) {
       // save new duration
       dataItem.duration = dataItem.duration + addDuration;
     }
@@ -240,5 +248,13 @@ class WorkoutDetailPageScreenState extends State<DataDetailItemPage> {
 //    String hundredsStr = (hundreds % 100).toString().padLeft(2, '0');
 
     return "$hourStr:$minutesStr:$secondsStr";
+  }
+
+  // Save data to database
+  void saveItemToDB() async {
+
+    int result = await LocalStorage.saveItemToDB(dataItem);
+
+    print("result: " + result.toString());
   }
 }

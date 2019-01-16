@@ -3,9 +3,11 @@ import 'package:flutter_calendar/flutter_calendar.dart';
 import './Utility/Documents.dart' as Documents;
 import './DataDetailItemPage.dart' as DataDetailItemPage;
 
-
 import './Utility/Variables.dart' as Variables;
 import './Utility/LocalStorage.dart' as LocalStorage;
+import './Utility/Utility.dart' as Utility;
+
+import './MockData.dart' as MockData;
 
 /// Checklist List Fragment which displays a checklist collection
 class ListFragment extends StatefulWidget {
@@ -31,20 +33,27 @@ class ListFragmentScreenState extends State<ListFragment> {
   void initState() {
     super.initState();
 
-    selectedDate = extractDay(DateTime.now());
+    selectedDate = Utility.extractDay(DateTime.now());
     print("Now " + selectedDate.toString());
 
     // determine key to retrieve data
     dayKey = LocalStorage.getDayKey(selectedDate);
 
     dayData = new List();
+
     // get day data
     getDayData();
   }
 
   getDayData() async {
+
+    // remove old data
+    dayData.clear();
+
     // get day data
     dayData = await LocalStorage.getDayData(dayKey);
+
+    addDefaultCategories();
 
     // update view with data
     setState(() {
@@ -52,6 +61,33 @@ class ListFragmentScreenState extends State<ListFragment> {
     });
   }
 
+  addDefaultCategories(){
+
+    List<String> usedCategories = new List();
+
+    // Create a list of categories already in database
+    for(Documents.UserDataItem item in dayData){
+      usedCategories.add(item.category);
+    }
+
+    for(String value in MockData.categories){
+      if ( !usedCategories.contains(value)){
+        // add item that has that category
+        Documents.UserDataItem item = new Documents.UserDataItem();
+
+        item.dayKey = dayKey;
+        item.category = value;
+        item.duration = new Duration();
+        item.timeModified = new DateTime.now();
+
+        // add item to dayData and display
+        setState(() {
+          dayData.add(item);
+        });
+      }
+    }
+
+  }
 
   @override
   void dispose() {
@@ -72,6 +108,12 @@ class ListFragmentScreenState extends State<ListFragment> {
               // Update selected date
               selectedDate = clickedDate;
 
+
+              dayKey = LocalStorage.getDayKey(selectedDate);
+
+              // update data in view
+              getDayData();
+
               print(selectedDate.toString());
             },
             isExpandable: false,
@@ -84,7 +126,7 @@ class ListFragmentScreenState extends State<ListFragment> {
               child: ListView.builder(
             itemCount: dayData.length,
             itemBuilder: (context, index) {
-              return new _dataListListItem(dayData[index]);
+              return new _DataListListItem(dayData[index]);
 //            return ListTile(
 //              title: Text('${dayData[index].category}'),
 //            );
@@ -94,19 +136,13 @@ class ListFragmentScreenState extends State<ListFragment> {
       ]),
     );
   }
-
-  // Determines the current day
-  DateTime extractDay(DateTime input){
-    DateTime day = new DateTime.utc(input.year, input.month, input.day, 12);
-    return day;
-  }
 }
 
 /// This is one contact list item.
-class _dataListListItem extends StatelessWidget {
-  _dataListListItem(this.item);
+class _DataListListItem extends StatelessWidget {
+  _DataListListItem(this.item);
 
-  Documents.UserDataItem item;
+  final Documents.UserDataItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +156,7 @@ class _dataListListItem extends StatelessWidget {
 
               // navigate to checklistAddItemDetailPage
               Navigator.of(context)
-                  .pushNamed(DataDetailItemPage.DataDetailItemPage.routeName);
+                  .pushNamed(DataDetailItemPage.ItemDetailItemPage.routeName);
 
 //                if(document[MyConstants.url2] != ""){
 //                  // launch url in browser

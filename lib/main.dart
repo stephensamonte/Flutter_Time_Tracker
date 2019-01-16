@@ -21,11 +21,6 @@ void main() {
 }
 //-----------------------------------------
 
-
-
-
-// ----------------------------------------
-
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -61,10 +56,10 @@ class MyApp extends StatelessWidget {
 //                settings: settings,
 //              );
 
-            case DataDetailItemPage.DataDetailItemPage.routeName:
+            case DataDetailItemPage.ItemDetailItemPage.routeName:
               return new MyCustomRoute(
                 builder: (_) =>
-                new DataDetailItemPage.DataDetailItemPage(dataItem: Variables.dataItemDetailDocument,),
+                new DataDetailItemPage.ItemDetailItemPage(dataItem: Variables.dataItemDetailDocument,),
                 settings: settings,
               );
 
@@ -115,7 +110,7 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
 //        );
 
 
-      case (DataDetailItemPage.DataDetailItemPage.routeName):
+      case (DataDetailItemPage.ItemDetailItemPage.routeName):
         return new FadeTransition(
 //          opacity: animation,
             opacity:

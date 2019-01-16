@@ -4,7 +4,6 @@ import 'package:path/path.dart';
 
 import 'package:sqflite/sqflite.dart';
 import './Documents.dart' as Documents;
-import '../MockData.dart' as MockData;
 
 // Determines key to store data
 String getDayKey(DateTime selectedDate) {
@@ -12,32 +11,57 @@ String getDayKey(DateTime selectedDate) {
   return new DateFormat(('yyyy-MM-dd')).format(selectedDate);
 }
 
-// Retrieve day data to display to user
-Future<List<Documents.UserDataItem>> getDayData(String storageKey) async {
-  // todo Create manifest database that keeps track of user created categories
-
-  // Get database
-  String allDataTableName = "allData";
-
+resetDatabase() async {
+  // create a database helper
   DatabaseHelper dbHelper = new DatabaseHelper();
 
-  // retrieve singe database list
-  Database dataDb = await dbHelper.getDatabase(allDataTableName);
+  // reset the database
+  dbHelper.resetDatabase();
 
-  MockData.item1.dayKey = storageKey;
 
-//  // add an item to the database
-  int result = await dbHelper.insertItem(allDataTableName, dataDb, MockData.item1);
-  print("result: " + result.toString());
 
-  List<Documents.UserDataItem> dayData = await dbHelper.getDayData(dataDb, allDataTableName, storageKey);
+}
+
+// Retrieve day data to display to user
+Future<List<Documents.UserDataItem>> getDayData(String storageKey) async {
+
+  // create a database helper
+  DatabaseHelper dbHelper = new DatabaseHelper();
+
+  // open the database
+  Database database = await dbHelper.getDatabase();
+
+  // Get day data
+  List<Documents.UserDataItem> dayData = await dbHelper.getDayData(database, storageKey);
+
+  // close the database
+  dbHelper.closeDatabase(database);
 
   return dayData;
 }
 
+// save item to database
+Future<int> saveItemToDB(Documents.UserDataItem dataItem) async {
+
+  // create a database helper
+  DatabaseHelper dbHelper = new DatabaseHelper();
+
+  // open the database
+  Database database = await dbHelper.getDatabase();
+
+  // add an item to the database
+  int result = await dbHelper.insertItem(database, dataItem);
+
+  // close the database
+  dbHelper.closeDatabase(database);
+
+  return result;
+
+
+}
+
+
 // ------------------------------------------------------------------
-// number of tables
-//
 
 class DatabaseHelper {
 
@@ -45,7 +69,7 @@ class DatabaseHelper {
   String dbName = "data";
 
   // Table Name
-  String tableName;
+  String tableName = "allData";
 
   // Table Columns
   String columnId = 'id';
@@ -54,26 +78,29 @@ class DatabaseHelper {
   String columnDayKey = "dayKey";
   String columnTimeModified = "timeModified";
 
-  String databasePath;
+//  Database database;
 
   // get the database
-  Future<Database> getDatabase(String nameTable) async {
-    tableName = nameTable;
-
+  Future<Database> getDatabase() async {
     return await startDatabase();
+  }
 
+  Future<String> getDatabasePath() async {
+    String databasesPath = await getDatabasesPath();
+    String databasePath = join(databasesPath, '$dbName.db');
+
+    return databasePath;
   }
 
   // Create the database
   startDatabase() async {
-    String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, '$dbName.db');
+    String path = await getDatabasePath();
 
-    databasesPath = path;
 //    // delete database
-//    await deleteDatabase(path); // for testing
+    //await deleteDatabase(path); // for testing
 
-    var db = await openDatabase(path, version: 1, onCreate: _onCreate);
+    Database db = await openDatabase(path, version: 1, onCreate: _onCreate);
+
     return db;
   }
 
@@ -82,39 +109,29 @@ class DatabaseHelper {
 
     // Must add a table
     return await db.execute(
-        'CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY, $columnDayKey TEXT, $columnCategory TEXT, $columnDuration INTEGER, $columnTimeModified TEXT)');
+        'CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY AUTOINCREMENT, $columnDayKey TEXT, $columnCategory TEXT, $columnDuration INTEGER, $columnTimeModified TEXT)');
   }
 
   // Add item to the database
-  Future<int> insertItem(String nameTable, Database database, Documents.UserDataItem item) async {
+  Future<int> insertItem(Database database, Documents.UserDataItem item) async {
 
-    tableName = nameTable;
+    int result;
+    if(item.id == null){
+      // not in db so insert
+      result = await database.insert(tableName, item.toMap());
 
-//    var dbClient = await database;
+    } else {
+      // already in db so just update
+      result = await database.update(tableName, item.toMap());
+    }
 
-    int result = await database.insert(tableName, item.toMap());
-
-//    // Insert some records in a transaction
-//    await database.transaction((txn) async {
-//      int id1 = await txn.rawInsert(
-//          'INSERT INTO $tableName($columnDuration, $columnTimeDay, $columnTimeModified) VALUES("some name", 1234, 456.789)');
-//      print('inserted1: $id1');
-//      int id2 = await txn.rawInsert(
-//          'INSERT INTO Test(name, value, num) VALUES(?, ?, ?)',
-//          ['another name', 12345678, 3.1416]);
-//      print('inserted2: $id2');
-//    });
-
-  return result;
-
+    return result;
   }
 
-  Future<List<Documents.UserDataItem>> getDayData(Database dataDb, String nameTable, String dayKey) async {
-
-    tableName = nameTable;
+  Future<List<Documents.UserDataItem>> getDayData(Database database, String dayKey) async {
 
     // Find data matching for the day
-    List<Map<String, dynamic>> records = await dataDb.rawQuery('SELECT * FROM "$tableName" WHERE dayKey= "$dayKey"');
+    List<Map<String, dynamic>> records = await database.rawQuery('SELECT * FROM "$tableName" WHERE dayKey= "$dayKey"');
     print(records.toString());
 
     // Convert map to UserDataItem items
@@ -145,8 +162,10 @@ class DatabaseHelper {
 
   // reset the database
   Future resetDatabase() async {
+    String path = await getDatabasePath();
+
     // delete database
-    await deleteDatabase(databasePath); // for testing
+    await deleteDatabase(path); // for testing
   }
 }
 
