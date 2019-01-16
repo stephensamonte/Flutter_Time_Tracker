@@ -10,7 +10,7 @@ import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
 import './MockData.dart' as MockData;
 
-import './Utility/LocalStorage.dart' as LocalStorage;
+import './Utility/SQLlocalStorage.dart' as LocalStorage;
 
 // Page
 class ItemDetailItemPage extends StatefulWidget {
@@ -64,12 +64,6 @@ class ItemDetailPageState extends State<ItemDetailItemPage> {
                           child: const ListTile(
                               leading: const Icon(Icons.delete),
                               title: const Text('Delete'))),
-
-                      const PopupMenuItem<String>(
-                          value: 'Edit',
-                          child: const ListTile(
-                              leading: const Icon(Icons.edit),
-                              title: const Text('Edit'))),
                     ]),
           ],
         ),
@@ -197,19 +191,10 @@ class ItemDetailPageState extends State<ItemDetailItemPage> {
 
         MockData.mockSingleDay.remove(widget.dataItem);
 
+        LocalStorage.deleteItemInDB(widget.dataItem);
+
         // Pop current view
         Navigator.of(context).pop();
-
-        break;
-      case "Edit":
-        // todo launch add workout item page with data
-
-//      // set item for add item page to open
-//        MyVariables.workoutAddItemSnapshot = widget.snapshotDocumentData;
-//
-//      // navigate to checklistAddItemDetailPage
-//        Navigator.of(context).pushNamed(WorkoutAddItemPage
-//            .WorkoutAddItemPage.routeName);
 
         break;
       default:

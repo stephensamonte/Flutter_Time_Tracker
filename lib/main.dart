@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 import './HomePage.dart' as HomePage;
 import './DataDetailItemPage.dart' as DataDetailItemPage;
-import './DataAddItemPage.dart' as DataAddItemPage;
+import './AddCategoryPage.dart' as DataAddItemPage;
 
 import './Utility/Variables.dart' as Variables;
 import './Utility/TimerService.dart' as TimerService;
+
+import './CategoriesPage.dart' as CategoriesPage;
 
 //void main() => runApp(MyApp());
 
@@ -63,13 +64,20 @@ class MyApp extends StatelessWidget {
                 settings: settings,
               );
 
-            case DataAddItemPage.DataAddItemPage.routeName:
+            case DataAddItemPage.AddCategoryPage.routeName:
               return new MyCustomRoute(
                 builder: (_) =>
-                new DataAddItemPage.DataAddItemPage(currentDate: Variables.dataDateAddItem,),
+                new DataAddItemPage.AddCategoryPage(currentDate: Variables.dataDateAddItem,),
+                settings: settings,
+              );
+            case CategoriesPage.CategoriesPage.routeName:
+              return new MyCustomRoute(
+                builder: (_) =>
+                new CategoriesPage.CategoriesPage(),
                 settings: settings,
               );
           }
+
           assert(false);
         }
         );
@@ -128,7 +136,7 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
               child: child,
             ));
 
-      case (DataAddItemPage.DataAddItemPage.routeName):
+      case (DataAddItemPage.AddCategoryPage.routeName):
         return new FadeTransition(
 //          opacity: animation,
             opacity:
@@ -146,6 +154,23 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
               child: child,
             ));
 
+      case (CategoriesPage.CategoriesPage.routeName):
+        return new FadeTransition(
+//          opacity: animation,
+            opacity:
+//          animation,
+            new CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeIn,
+            ),
+            child: new SlideTransition(
+              position: new Tween<Offset>(
+                begin: const Offset(0.0, 0.2),
+                end: Offset.zero,
+              ).animate(//animation),
+                  new CurvedAnimation(parent: animation, curve: Curves.easeIn)),
+              child: child,
+            ));
 
 //      case (SettingsPage.SettingsPage.routeName):
 //        return new FadeTransition(

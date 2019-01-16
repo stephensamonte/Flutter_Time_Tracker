@@ -8,25 +8,27 @@ import './Utility/Documents.dart' as Documents;
 import './Utility/Variables.dart' as MyVariables;
 import './MockData.dart' as MockData;
 
+import './Utility/SharedPrefsStorage.dart' as SharedPrefsStorage;
+
 /// Enum behavior for the bottom navigation bar.
 enum AppBarBehavior {normal, pinned, floating, snapping}
 
 /// Detail Page which displays information
-class DataAddItemPage extends StatefulWidget {
+class AddCategoryPage extends StatefulWidget {
 //  static const String routeName = '/contacts';
 // here is a state object now defined in MessengerDetailPage
-  DataAddItemPage({Key key, this.currentDate}) : super(key: key);
+  AddCategoryPage({Key key, this.currentDate}) : super(key: key);
 
   final currentDate;
 
-  static const String routeName = '/DataAddItemPage';
+  static const String routeName = '/AddCategoryPage';
 
   @override
-  DataAddItemPageState createState() => new DataAddItemPageState();
+  AddCategoryPageState createState() => new AddCategoryPageState();
 }
 
 /// Detail page state.
-class DataAddItemPageState extends State<DataAddItemPage> {
+class AddCategoryPageState extends State<AddCategoryPage> {
 
 // input
   final TextEditingController _textController1 = new TextEditingController();
@@ -144,17 +146,19 @@ class DataAddItemPageState extends State<DataAddItemPage> {
         onPressed: () {
 
 
-          // create item
-          Documents.UserDataItem newItem = new Documents.UserDataItem(
-            category: _textController1.text,
-            duration: new Duration(),
-            dayKey: widget.currentDate,
-            timeModified: new DateTime.now()
-          );
+//          // create item
+//          Documents.UserDataItem newItem = new Documents.UserDataItem(
+//            category: _textController1.text,
+//            duration: new Duration(),
+//            dayKey: widget.currentDate,
+//            timeModified: new DateTime.now()
+//          );
+//
+//          // todo save data to list
+//          MockData.mockSingleDay.add(newItem);
 
-          // todo save data to list
-          MockData.mockSingleDay.add(newItem);
-
+        // add category to default categories
+          SharedPrefsStorage.addCategory(_textController1.text);
 
           // Pop current view
           Navigator.of(context).pop();

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import './DataListFragment.dart' as WorkoutListFragment;
-import './DataAddItemPage.dart' as DataAddItemPage;
+import './AddCategoryPage.dart' as DataAddItemPage;
 import './Utility/Variables.dart' as Variables;
-import './Utility/LocalStorage.dart' as LocalStorage;
+import './Utility/SQLlocalStorage.dart' as LocalStorage;
+
+import './CategoriesPage.dart' as CategoriesPage;
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -37,7 +39,12 @@ class _HomePageState extends State<HomePage> {
                     value: 'ResetDB',
                     child: const ListTile(
                         leading: const Icon(Icons.warning),
-                        title: const Text('Reset Database')))
+                        title: const Text('Reset Database'))),
+                const PopupMenuItem<String>(
+                    value: 'CategoriesPage',
+                    child: const ListTile(
+                        leading: const Icon(Icons.list),
+                        title: const Text('Categories')))
                 //              new IconButton(
 //                icon: new Icon(Icons.calendar_today),
 //                tooltip: 'Calendar',
@@ -69,7 +76,7 @@ class _HomePageState extends State<HomePage> {
           Variables.dataDateAddItem = DateTime.now();
 
           // Open add new category
-          Navigator.of(context).pushNamed(DataAddItemPage.DataAddItemPage.routeName);
+          Navigator.of(context).pushNamed(DataAddItemPage.AddCategoryPage.routeName);
 
         },
         tooltip: 'Add Category',
@@ -91,6 +98,13 @@ class _HomePageState extends State<HomePage> {
 
 //        Navigator.of(context).pushNamed("/SettingsPage");
         break;
+
+      case "CategoriesPage":
+        // navigate to categories page
+        Navigator.of(context).pushNamed(CategoriesPage.CategoriesPage.routeName);
+        break;
+
+
       case "Feedback":
 
       // open feedback url

@@ -4,8 +4,10 @@ import './Utility/Documents.dart' as Documents;
 import './DataDetailItemPage.dart' as DataDetailItemPage;
 
 import './Utility/Variables.dart' as Variables;
-import './Utility/LocalStorage.dart' as LocalStorage;
+import './Utility/SQLlocalStorage.dart' as LocalStorage;
 import './Utility/Utility.dart' as Utility;
+
+import './Utility/SharedPrefsStorage.dart' as SharedPrefsStorage;
 
 import './MockData.dart' as MockData;
 
@@ -20,6 +22,10 @@ class ListFragment extends StatefulWidget {
 
 /// State
 class ListFragmentScreenState extends State<ListFragment> {
+
+  // default categories
+  List<String> defaultCategories;
+
   // editable day data
   List<Documents.UserDataItem> dayData;
 
@@ -32,6 +38,8 @@ class ListFragmentScreenState extends State<ListFragment> {
   @override
   void initState() {
     super.initState();
+
+    defaultCategories = new List();
 
     selectedDate = Utility.extractDay(DateTime.now());
     print("Now " + selectedDate.toString());
@@ -53,7 +61,7 @@ class ListFragmentScreenState extends State<ListFragment> {
     // get day data
     dayData = await LocalStorage.getDayData(dayKey);
 
-    addDefaultCategories();
+    await addDefaultCategories();
 
     // update view with data
     setState(() {
@@ -61,8 +69,11 @@ class ListFragmentScreenState extends State<ListFragment> {
     });
   }
 
-  addDefaultCategories(){
+  addDefaultCategories() async {
 
+//    if (defaultCategories == null){
+      defaultCategories = await SharedPrefsStorage.getCategories();
+//    }
     List<String> usedCategories = new List();
 
     // Create a list of categories already in database
@@ -70,7 +81,7 @@ class ListFragmentScreenState extends State<ListFragment> {
       usedCategories.add(item.category);
     }
 
-    for(String value in MockData.categories){
+    for(String value in defaultCategories){
       if ( !usedCategories.contains(value)){
         // add item that has that category
         Documents.UserDataItem item = new Documents.UserDataItem();
@@ -107,7 +118,6 @@ class ListFragmentScreenState extends State<ListFragment> {
             onDateSelected: (clickedDate) {
               // Update selected date
               selectedDate = clickedDate;
-
 
               dayKey = LocalStorage.getDayKey(selectedDate);
 

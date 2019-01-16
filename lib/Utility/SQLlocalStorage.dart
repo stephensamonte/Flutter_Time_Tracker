@@ -18,8 +18,6 @@ resetDatabase() async {
   // reset the database
   dbHelper.resetDatabase();
 
-
-
 }
 
 // Retrieve day data to display to user
@@ -57,6 +55,25 @@ Future<int> saveItemToDB(Documents.UserDataItem dataItem) async {
 
   return result;
 
+
+}
+
+// delete item
+Future<int> deleteItemInDB(Documents.UserDataItem dataItem) async {
+
+  // create a database helper
+  DatabaseHelper dbHelper = new DatabaseHelper();
+
+  // open the database
+  Database database = await dbHelper.getDatabase();
+
+  // add an item to the database
+  int result = await dbHelper.deleteItem(database, dataItem);
+
+  // close the database
+  dbHelper.closeDatabase(database);
+
+  return result;
 
 }
 
@@ -123,6 +140,24 @@ class DatabaseHelper {
     } else {
       // already in db so just update
       result = await database.update(tableName, item.toMap());
+    }
+
+    return result;
+  }
+
+  // Add item to the database
+  Future<int> deleteItem(Database database, Documents.UserDataItem item) async {
+
+    int result;
+    if(item.id == null){
+      // not in db so insert
+//      result = await database.insert(tableName, item.toMap());
+    result = 2;
+
+    } else {
+      // already in db so just update
+      result = await database.delete(tableName, where: '$columnId = ?', whereArgs: [item.id]);
+
     }
 
     return result;

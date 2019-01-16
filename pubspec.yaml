@@ -19,6 +19,7 @@ dependencies:
   flutter_duration_picker: 1.0.4         # Duration picker
   flutter_calendar: 0.0.8                # Calendar Date Picker
   sqflite: 1.0.0                         # Local Database for storage
+  shared_preferences: 0.4.3              # Shared Preferences for user preferences & temporary data
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
