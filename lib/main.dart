@@ -103,7 +103,7 @@ class MyCustomRoute<T> extends MaterialPageRoute<T> {
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     // if it is the first route to open then just appear
-    if (settings.isInitialRoute) return child;
+    if (settings.name == '/') return child;
 
     switch (settings.name) {
 //      case ('/'):
